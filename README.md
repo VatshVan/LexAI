@@ -1,122 +1,126 @@
-# LexAI — AI-Powered Legal Paralegal
+# LexAI
 
-An algorithmic paralegal for Indian solo legal practitioners. Processes
-FIRs, witness statements, and affidavits to extract patterns, detect
-contradictions, and draft verified legal documents.
+LexAI is an AI-assisted legal drafting and review platform built for handling real-world case documents. It helps ingest PDFs and text files, extract key facts, search across evidence, detect inconsistencies, and generate structured legal outputs.
 
-## Required Services & API Keys
+## What it does
 
-All services below must be configured before running.
+- Ingests case documents such as FIRs, witness statements, affidavits, and related attachments
+- Runs OCR on scanned documents when needed
+- Classifies user intent and routes requests through the right workflow
+- Retrieves relevant evidence from a vector store for grounded responses
+- Detects contradictions and supports entailment-style verification
+- Drafts and assembles legal content from templates and structured context
+- Exports generated work into document formats for downstream use
 
-| Service | Required | Free Tier | Get It |
-|---|---|---|---|
-| Anthropic API | YES | No (~$5 credit) | [console.anthropic.com](https://console.anthropic.com) |
-| Voyage AI | YES | 50M tokens free | [dash.voyageai.com](https://dash.voyageai.com) |
-| Redis | YES | 10K req/day free | [upstash.com](https://upstash.com) |
-| PostgreSQL | Prod only | 500MB free | [supabase.com](https://supabase.com) |
-| Cloudinary | Prod only | 25GB free | [cloudinary.com](https://cloudinary.com) |
-| Vercel | Frontend | 100GB/mo free | [vercel.com](https://vercel.com) |
+## Project layout
 
-### Anthropic API
-- Used for: Intent classification (Haiku), synthesis, contradiction detection,
-  template filling, entailment scoring (Sonnet)
-- Estimated cost: $0.02–0.05 per lawyer query with prompt caching enabled
-- Get key: https://console.anthropic.com → API Keys
+- Backend: Django + Django REST Framework
+- Async processing: Celery + Redis
+- Retrieval and embeddings: ChromaDB + Voyage AI
+- LLM orchestration: Anthropic Claude
+- OCR: PyMuPDF and Tesseract-based support
+- Frontend: React + Vite + TypeScript + Tailwind CSS
 
-### Voyage AI
-- Used for: Embedding legal documents and search queries (voyage-law-2)
-- Free tier: 50 million tokens ≈ 12,500 full legal documents at no cost
-- Get key: https://dash.voyageai.com → API Keys
+The backend is organized into domain apps for documents, orchestration, templates, compilation, retrieval, verification, and agent workflows.
 
-### Redis (Upstash recommended)
-- Used for: Celery task broker + result backend, SSE pub/sub, query context cache
-- Free tier: 10,000 commands/day (sufficient for development and small production)
-- Get URL: https://upstash.com → Create Database → Copy Redis URL
+## Requirements
 
-### PostgreSQL
-- Local dev: SQLite works (default in development.py)
-- Production: Supabase free tier (500MB) or Railway
-- Get URL: https://supabase.com → Project Settings → Database → Connection String
+- Python 3.10+
+- Node.js 18+
+- Redis
+- API access for the configured AI services
 
-### Cloudinary (production file storage)
-- Used for: Storing uploaded PDFs and generated exports across server restarts
-- For hackathon/MVP: skip this, use local filesystem storage (USE_CLOUDINARY=False)
-- Get credentials: https://cloudinary.com → Dashboard → API Keys
+For local development, SQLite is enabled by default. PostgreSQL can be used in production.
 
-## 🚀 How to Run the Project Locally
+## Environment setup
 
-To run LexAI locally, you need three separate terminal windows/tabs to run the backend server, the Celery background worker, and the React frontend respectively.
+Create the backend environment file:
 
-### Step 1: Environment Setup
-First, ensure you have your API keys ready (Anthropic, Voyage AI, and an Upstash Redis URL).
+1. Copy the example file in the project root:
+   - `.env.example` to `.env`
+2. Fill in the required values, especially:
+   - `SECRET_KEY`
+   - `ANTHROPIC_API_KEY`
+   - `VOYAGE_API_KEY`
+   - `REDIS_URL`
+3. If you are using the frontend locally, copy the example file in the frontend folder:
+   - `frontend/.env.local.example` to `frontend/.env.local`
+4. Set `VITE_API_BASE_URL` to your backend URL, for example:
+   - `http://localhost:8000/api/v1`
 
-1. In the root directory, create your backend `.env` file:
-   ```bash
-   cp .env.example .env
-   ```
-   *Edit `.env` and fill in your `ANTHROPIC_API_KEY`, `VOYAGE_API_KEY`, and `REDIS_URL`.*
+## Installation
 
-2. Navigate to the `frontend` directory and create the frontend `.env.local` file:
-   ```bash
-   cd frontend
-   cp .env.local.example .env.local
-   ```
-   *(Ensure `VITE_API_BASE_URL=http://localhost:8000/api/v1` is set inside `.env.local`)*
+From the project root:
 
-### Step 2: Install Dependencies & Migrate Database
-In your main terminal, install all backend requirements and set up the SQLite database:
-```bash
-pip install -r requirements.txt
-python manage.py migrate
-```
+1. Install Python dependencies:
+   - `pip install -r requirements.txt`
+2. Apply database migrations:
+   - `python manage.py migrate`
+3. Install frontend dependencies:
+   - `cd frontend`
+   - `npm install`
 
-### Step 3: Run the Stack
-You will need to open **three separate terminal windows** to keep all services running simultaneously:
+## Run locally
 
-**Terminal 1: Django Backend Server**
-```bash
-# From the root directory
-python manage.py runserver
-```
+Run the backend, worker, and frontend in separate terminals.
 
-**Terminal 2: Celery Task Worker**
-```bash
-# From the root directory
-# Windows users might need to run: celery -A config worker -l info -P eventlet
-celery -A config worker -l info
-```
+### 1) Django backend
 
-**Terminal 3: React Frontend (Vite)**
-```bash
-# From the root directory
-cd frontend
-npm install
-npm run dev
-```
+From the project root:
 
-Once all three are running, open your browser and navigate to `http://localhost:5173` (or the port Vite outputs in Terminal 3) to use LexAI!
+- `python manage.py runserver`
 
-## Deploy Frontend to Vercel
+### 2) Celery worker
 
-```bash
-cd frontend
-npm run build        # generates dist/
-vercel --prod        # or connect repo to Vercel dashboard
-```
+From the project root:
 
-Set in Vercel dashboard → Settings → Environment Variables:
-  VITE_API_BASE_URL = https://your-backend.railway.app/api/v1
+- `celery -A config worker -l info`
 
-Then update backend .env:
-  CORS_ALLOWED_ORIGINS = https://your-lexai-app.vercel.app
+### 3) Frontend
 
-## Cost Breakdown (per month, light usage ~200 queries)
+From the `frontend` folder:
 
-| Service | Cost |
-|---|---|
-| Anthropic (200 queries × $0.04) | ~$8 |
-| Voyage AI (within free 50M tokens) | $0 |
-| Redis Upstash free tier | $0 |
-| Supabase free tier | $0 |
-| Vercel free tier | $0 |
-| **Total** | **~$8/month** |
+- `npm run dev`
+
+Open the frontend URL shown by Vite, usually `http://localhost:5173`.
+
+## API documentation
+
+If API docs are enabled in the backend settings, the schema and Swagger UI are available at:
+
+- `/api/v1/schema/`
+- `/api/v1/schema/ui/`
+
+## Frontend scripts
+
+Available scripts in `frontend/package.json`:
+
+- `npm run dev` — start the Vite development server
+- `npm run build` — type-check and build for production
+- `npm run preview` — preview the production build locally
+- `npm run generate:types` — generate TypeScript API types from the backend schema
+
+## Testing
+
+Run the test suite from the project root:
+
+- `pytest`
+
+## Deployment notes
+
+- Use PostgreSQL in production
+- Use a persistent Redis instance for Celery and cached workflows
+- Set `CORS_ALLOWED_ORIGINS` to your frontend domain
+- Update `VITE_API_BASE_URL` to the deployed backend API URL
+
+## Repository structure
+
+- `apps/` — core backend domains and agents
+- `config/` — Django project configuration
+- `frontend/` — React user interface
+- `infrastructure/` — OCR and storage integrations
+- `tests/` — backend test suite
+
+## License
+
+Add the appropriate license here if the project is going to be published.
