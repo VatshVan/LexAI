@@ -120,7 +120,3 @@ Run the test suite from the project root:
 - `frontend/` — React user interface
 - `infrastructure/` — OCR and storage integrations
 - `tests/` — backend test suite
-
-## License
-
-Add the appropriate license here if the project is going to be published.
