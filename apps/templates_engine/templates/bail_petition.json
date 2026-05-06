@@ -1,0 +1,21 @@
+{
+  "template_name": "bail_petition",
+  "display_name": "Bail Petition",
+  "version": "1.0",
+  "fields": [
+    {"field_name": "court_name", "description": "Full name of the court", "required": true},
+    {"field_name": "case_number", "description": "Case registration number", "required": true},
+    {"field_name": "fir_number", "description": "FIR number including year and police station", "required": true},
+    {"field_name": "fir_date", "description": "Date of FIR registration (DD/MM/YYYY)", "required": true},
+    {"field_name": "police_station", "description": "Name of police station that registered FIR", "required": true},
+    {"field_name": "accused_name", "description": "Full legal name of the accused", "required": true},
+    {"field_name": "accused_age", "description": "Age of accused in years", "required": true},
+    {"field_name": "accused_address", "description": "Complete residential address of accused", "required": true},
+    {"field_name": "sections_of_law", "description": "IPC/CrPC sections accused is charged under", "required": true},
+    {"field_name": "grounds_for_bail", "description": "Primary grounds for bail grant", "required": true},
+    {"field_name": "surety_name", "description": "Full name of surety/guarantor", "required": false},
+    {"field_name": "surety_address", "description": "Complete address of surety", "required": false},
+    {"field_name": "advocate_name", "description": "Name of the filing advocate", "required": true},
+    {"field_name": "date_of_application", "description": "Date of this petition (DD/MM/YYYY)", "required": true}
+  ]
+}

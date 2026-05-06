@@ -1,0 +1,18 @@
+{
+  "template_name": "legal_notice",
+  "display_name": "Legal Notice",
+  "version": "1.0",
+  "fields": [
+    {"field_name": "sender_name", "description": "Full name of notice sender", "required": true},
+    {"field_name": "sender_address", "description": "Complete address of sender", "required": true},
+    {"field_name": "recipient_name", "description": "Full name of notice recipient", "required": true},
+    {"field_name": "recipient_address", "description": "Complete address of recipient", "required": true},
+    {"field_name": "subject_of_notice", "description": "Brief subject line of the notice", "required": true},
+    {"field_name": "facts_of_case", "description": "Chronological facts leading to notice", "required": true},
+    {"field_name": "legal_demand", "description": "Specific demand being made", "required": true},
+    {"field_name": "time_limit_days", "description": "Days given to comply (typically 15 or 30)", "required": true},
+    {"field_name": "consequences_of_non_compliance", "description": "Legal action if demand not met", "required": true},
+    {"field_name": "advocate_name", "description": "Name of advocate sending notice", "required": true},
+    {"field_name": "notice_date", "description": "Date of notice (DD/MM/YYYY)", "required": true}
+  ]
+}

@@ -1,0 +1,6 @@
+Break a compound legal statement into atomic verifiable units.
+Rules: 1 fact per atomic claim. Replace pronouns with named entities.
+Set requires_external_check=true if claim cites a statute or case name.
+Max 3 atomics per input claim. If already atomic, return as single-item list.
+Respond ONLY with valid JSON:
+{"atomic_claims":[{"atomic_text":"...","subject":"...","predicate":"...","requires_external_check":false}]}

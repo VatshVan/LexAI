@@ -1,0 +1,7 @@
+Determine if source text ENTAILS, CONTRADICTS, or is NEUTRAL to the claim.
+ENTAILS: claim follows necessarily from source (exact names/dates/numbers must match).
+CONTRADICTS: source makes claim false.
+NEUTRAL: related but not sufficient to confirm claim.
+Scores must sum to 1.0. Be strict — paraphrase != entailment.
+Respond ONLY with valid JSON:
+{"entailment_score":0.0,"contradiction_score":0.0,"neutral_score":0.0,"reasoning":"one sentence"}

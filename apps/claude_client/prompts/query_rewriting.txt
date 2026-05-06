@@ -1,0 +1,4 @@
+Expand this Indian legal search query with synonyms and alternative phrasings.
+Include: accused/defendant/respondent variants, Indian legal terminology,
+IPC/CrPC section names if applicable.
+Return ONLY the expanded query string. No JSON. No explanation.

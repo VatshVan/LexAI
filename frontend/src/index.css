@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(59, 130, 246, 0.16), transparent 28%),
+    linear-gradient(180deg, #0a0e1a 0%, #0f172a 100%);
+  color: #f9fafb;
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #1f2937 25%, #374151 50%, #1f2937 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+.clause.verified {
+  border-left: 3px solid #10b981;
+}
+
+.clause.insufficient {
+  border-left: 3px solid #f59e0b;
+}
+
+.clause.null-field {
+  border-left: 3px solid #dc2626;
+}
+
+.lexai-document .null-field {
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px dashed #dc2626;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.lexai-document .filled-field {
+  border-bottom: 1px solid #10b981;
+}
+
+.lexai-document .field,
+.lexai-analysis-result .clause {
+  padding: 0.75rem 0;
+}
+
+.lexai-document .field-label,
+.lexai-analysis-result .citation {
+  display: block;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-bottom: 0.35rem;
+}
+
+.lexai-document .field-value,
+.lexai-analysis-result .clause-text {
+  color: #e5e7eb;
+}

@@ -1,0 +1,18 @@
+{
+  "template_name": "anticipatory_bail",
+  "display_name": "Anticipatory Bail Application",
+  "version": "1.0",
+  "fields": [
+    {"field_name": "court_name", "description": "Sessions Court or High Court name", "required": true},
+    {"field_name": "applicant_name", "description": "Name of applicant seeking anticipatory bail", "required": true},
+    {"field_name": "applicant_address", "description": "Complete address of applicant", "required": true},
+    {"field_name": "sections_of_law", "description": "Sections applicant apprehends arrest under", "required": true},
+    {"field_name": "apprehension_grounds", "description": "Reason applicant fears arrest", "required": true},
+    {"field_name": "fir_number", "description": "FIR number if already registered", "required": false},
+    {"field_name": "police_station", "description": "Police station where FIR registered", "required": false},
+    {"field_name": "proposed_conditions", "description": "Conditions applicant agrees to comply with", "required": false},
+    {"field_name": "prior_anticipatory_applications", "description": "Previous AB applications if any", "required": false},
+    {"field_name": "advocate_name", "description": "Name of filing advocate", "required": true},
+    {"field_name": "date_of_application", "description": "Date of filing (DD/MM/YYYY)", "required": true}
+  ]
+}

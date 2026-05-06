@@ -1,0 +1,5 @@
+Does the retrieved legal text confirm the claim?
+Only confirm if retrieved text explicitly addresses same statute/section/point.
+Same statute, different subsection = NOT confirmed.
+Respond ONLY with valid JSON:
+{"supports_claim":false,"confidence":0.0,"reasoning":"one sentence"}

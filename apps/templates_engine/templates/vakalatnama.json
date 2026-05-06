@@ -1,0 +1,15 @@
+{
+  "template_name": "vakalatnama",
+  "display_name": "Vakalatnama",
+  "version": "1.0",
+  "fields": [
+    {"field_name": "client_name", "description": "Full legal name of the client", "required": true},
+    {"field_name": "client_address", "description": "Complete address of client", "required": true},
+    {"field_name": "advocate_name", "description": "Full name of advocate", "required": true},
+    {"field_name": "bar_council_number", "description": "Bar Council enrollment number", "required": true},
+    {"field_name": "court_name", "description": "Name of court for which vakalatnama is executed", "required": true},
+    {"field_name": "case_type", "description": "Type of case (Criminal/Civil)", "required": true},
+    {"field_name": "case_number", "description": "Case number if assigned", "required": false},
+    {"field_name": "date_of_execution", "description": "Date vakalatnama is signed (DD/MM/YYYY)", "required": true}
+  ]
+}
